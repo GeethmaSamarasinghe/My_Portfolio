@@ -352,18 +352,30 @@ body {
   transform: translateY(0);
 }
 
-/* Contact Box (like project card) */
-.contact-box {
-  max-width: 700px;                     /* width like project card */
-  width: 90%;                           /* responsive */
-  margin: 0 auto;                       /* center horizontally */
-  padding: 30px;
-  background: #2c2c2c;                  /* dark rectangle background */
-  border-radius: 12px;                  /* rounded corners */
-  box-shadow: 0 4px 12px rgba(0,0,0,0.4); /* shadow like project card */
-  text-align: center;
-  transition: transform 0.3s, background 0.3s;
+/* Footer */
+footer {
+  background: #1c1c1c;           /* dark background */
+  color: #f0f0f0;                /* text color */
+  text-align: center;            /* center text */
+  padding: 20px 10px;            /* spacing */
+  font-size: 0.9rem;             /* slightly smaller text */
+  border-top: 1px solid #333;   /* subtle top border */
 }
+
+footer p {
+  margin: 0;                     /* remove default margin */
+}
+
+
+
+
+
+
+
+
+
+
+
 
 
 
