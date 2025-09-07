@@ -1,0 +1,158 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Poppins', sans-serif;
+  background: linear-gradient(to bottom, #000000, #1c1c1c);
+  color: #f0f0f0;
+  line-height: 1.6;
+  scroll-behavior: smooth;
+}
+
+/* Navbar */
+.navbar {
+  position: fixed;
+  top: 0;
+  right: 0;
+  background: rgba(20, 20, 20, 0.8);
+  padding: 15px 30px;
+  border-radius: 0 0 0 15px;
+  z-index: 1000;
+}
+
+.navbar ul {
+  list-style: none;
+  display: flex;
+  gap: 20px;
+}
+
+.navbar a {
+  text-decoration: none;
+  color: #f0f0f0;
+  font-weight: 500;
+  transition: color 0.3s;
+}
+
+.navbar a:hover {
+  color: #9c9c9c;
+}
+
+/* Sections */
+.section {
+  min-height: 100vh;
+  padding: 100px 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+/* Hero */
+.hero h1 {
+  font-size: 3rem;
+}
+
+.hero span {
+  color: #bbbbbb;
+}
+
+.hero p {
+  margin: 10px 0 20px;
+  font-size: 1.2rem;
+}
+
+.intro-gif {
+  width: 100px;
+  margin-top: 10px;
+}
+
+/* Skills */
+.skills-list {
+  display: flex;
+  gap: 20px;
+  margin-top: 20px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.skill {
+  background: #2c2c2c;
+  padding: 10px 20px;
+  border-radius: 8px;
+  transition: background 0.3s;
+}
+
+.skill:hover {
+  background: #444444;
+}
+
+/* Project Card */
+.project-card {
+  width: 300px;
+  height: 200px;
+  perspective: 1000px;
+  margin-top: 30px;
+}
+
+.project-card div {
+  width: 100%;
+  height: 100%;
+  border-radius: 10px;
+  backface-visibility: hidden;
+  position: absolute;
+  top: 0;
+  left: 0;
+  transition: transform 0.8s ease;
+}
+
+.card-front img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 10px;
+}
+
+.card-back {
+  background: #2c2c2c;
+  padding: 20px;
+  transform: rotateY(180deg);
+}
+
+.project-card:hover .card-front {
+  transform: rotateY(180deg);
+}
+
+.project-card:hover .card-back {
+  transform: rotateY(0deg);
+}
+
+/* Animations */
+.fade-in {
+  opacity: 0;
+  transform: translateY(20px);
+  animation: fadeIn 1s forwards;
+}
+
+.slide-up {
+  opacity: 0;
+  transform: translateY(40px);
+  animation: slideUp 1s forwards;
+}
+
+@keyframes fadeIn {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideUp {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
