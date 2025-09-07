@@ -7,11 +7,31 @@
 
 body {
   font-family: 'Poppins', sans-serif;
-  background: linear-gradient(to bottom, #000000, #1c1c1c);
-  color: #f0f0f0;
   line-height: 1.6;
   scroll-behavior: smooth;
+  color: #f0f0f0;
+  
+  /* Polished background: linear + radial gradient */
+  background:
+    radial-gradient(circle at top left, #2a2a2a, #0a0a0a),
+    linear-gradient(135deg, #0a0a0a, #1c1c1c, #2a2a2a);
+  background-attachment: fixed;
+  position: relative;
 }
+
+/* Optional subtle noise overlay */
+/*
+body::before {
+  content: '';
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: url('noise.png');
+  opacity: 0.02;
+  pointer-events: none;
+  z-index: 0;
+}
+*/
 
 /* Navbar */
 .navbar {
@@ -22,6 +42,10 @@ body {
   padding: 15px 30px;
   border-radius: 0 0 0 15px;
   z-index: 1000;
+  transition: background 0.3s;
+}
+.navbar:hover {
+  background: rgba(30, 30, 30, 0.9);
 }
 .navbar ul {
   list-style: none;
@@ -32,10 +56,11 @@ body {
   text-decoration: none;
   color: #f0f0f0;
   font-weight: 500;
-  transition: color 0.3s;
+  transition: color 0.3s, transform 0.2s;
 }
 .navbar a:hover {
-  color: #9c9c9c;
+  color: #bbbbbb;
+  transform: translateY(-2px);
 }
 
 /* Sections */
@@ -47,9 +72,12 @@ body {
   justify-content: center;
   align-items: center;
   text-align: center;
+  position: relative;
+  z-index: 1;
 }
 
-/* Hero */
+/* Hero Section */
+
 .hero h1 {
   font-size: 3rem;
 }
@@ -61,13 +89,35 @@ body {
   font-size: 1.2rem;
 }
 .intro-gif {
-  width: 100px;
-  margin-top: 10px;
+  width: 300px; 
+  margin-top: 20px;
   opacity: 0;
-  transition: opacity 0.6s ease;
+  transition: opacity 0.6s ease, transform 0.5s ease;
+  transform: translateY(20px);
 }
 .intro-gif.show {
   opacity: 1;
+  transform: translateY(0);
+}
+
+/* About Me Box */
+#about {
+  display: flex;
+  justify-content: center;
+}
+#about p {
+  background: #2c2c2c;
+  padding: 30px 35px;
+  border-radius: 12px;
+  max-width: 700px;
+  font-size: 1.15rem;
+  line-height: 1.8;
+  text-align: center;
+  transition: transform 0.3s, background 0.3s;
+}
+#about p:hover {
+  background: #3a3a3a;
+  transform: translateY(-3px);
 }
 
 /* Skills & Projects Container */
@@ -75,10 +125,12 @@ body {
   display: flex;
   width: 100%;
   max-width: 1200px;
-  gap: 50px;
+  gap: 40px;
   justify-content: space-between;
   align-items: stretch;
 }
+
+/* Skills Column */
 .skills {
   flex: 1;
   background: #1c1c1c;
@@ -86,11 +138,35 @@ body {
   border-radius: 12px;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+}
+.skills h2 {
+  text-align: left;
+  margin-bottom: 20px;
+}
+.skills-list {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 15px;
 }
 
-/* Project Card */
+/* Individual skill box */
+.skill {
+  background: #2c2c2c;
+  padding: 12px 22px;
+  border-radius: 8px;
+  width: 100%;
+  max-width: 180px;
+  text-align: center;
+  transition: background 0.3s, transform 0.2s;
+  cursor: default;
+}
+.skill:hover {
+  background: #444444;
+  transform: translateY(-2px);
+}
 
+/* Projects Column */
 .projects {
   flex: 1;
   background: #1c1c1c;
@@ -98,15 +174,18 @@ body {
   border-radius: 12px;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+}
+.projects h2 {
+  text-align: left;
+  margin-bottom: 20px;
+  align-self: flex-start;
 }
 
+/* Project Card */
 .project-card {
   width: 100%;
-  max-width: 320px;
   height: 200px;
   perspective: 1000px;
-  margin-top: 20px;
 }
 .project-card .card {
   width: 100%;
@@ -139,6 +218,7 @@ body {
   flex-direction: column;
   justify-content: center;
   gap: 8px;
+  text-align: left;
 }
 
 /* Reveal / Scroll Animations */
@@ -162,13 +242,28 @@ body {
 }
 @keyframes blink { 50% { border-color: transparent; } }
 
+/* Navbar anchor fix (offset for fixed navbar) */
+:target::before {
+  content: "";
+  display: block;
+  height: 80px; /* height of navbar */
+  margin-top: -80px;
+  visibility: hidden;
+}
+
 /* Responsive */
-@media (max-width: 768px) {
+@media (max-width: 1024px) {
   .skills-projects-container {
     flex-direction: column;
-    align-items: center;
+    gap: 30px;
   }
   .skills, .projects {
     text-align: center;
+    justify-content: center;
+  }
+  .skills h2, .projects h2 {
+    text-align: center;
   }
 }
+
+

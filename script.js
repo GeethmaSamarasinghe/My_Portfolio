@@ -4,15 +4,23 @@ const typedText = document.getElementById("typed-text");
 const introGif = document.querySelector(".intro-gif");
 let index = 0;
 const speed = 100;
+const showGifAt = 3; // show GIF after 3 characters
 
 function typeEffect() {
   if (index < text.length) {
-    typedText.textContent += text.charAt(index++);
+    typedText.textContent += text.charAt(index);
+
+    // Show GIF early
+    if (index === showGifAt && introGif) {
+      introGif.classList.add("show");
+    }
+
+    index++;
     setTimeout(typeEffect, speed);
-  } else {
-    if (introGif) introGif.classList.add("show");
   }
 }
+
+// Start typing on DOM load
 window.addEventListener("DOMContentLoaded", typeEffect);
 
 // Scroll Reveal
