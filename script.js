@@ -22,6 +22,18 @@ function typeEffect() {
 
 // Start typing on DOM load
 window.addEventListener("DOMContentLoaded", typeEffect);
+const aboutElements = document.querySelectorAll('.about-text, .about-pic');
+
+const aboutObserver = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+    }
+  });
+});
+
+aboutElements.forEach(el => aboutObserver.observe(el));
+
 
 // Scroll Reveal
 const reveals = document.querySelectorAll(".reveal");

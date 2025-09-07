@@ -101,24 +101,88 @@ body::before {
 }
 
 /* About Me Box */
-#about {
+.about-me {
   display: flex;
   justify-content: center;
+  padding: 50px 20px;
 }
-#about p {
+
+.about-container {
+  display: flex;
+  width: 100%;
+  max-width: 1200px;
+  gap: 50px;
+  align-items: stretch; /* equal vertical height */
+}
+
+.about-text, .about-pic {
+  flex: 1; /* equal width */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+/* About Text */
+.about-text h2 {
+  font-size: 2rem;
+  margin-bottom: 20px;
+  text-align: left;
+}
+
+.about-text p {
   background: #2c2c2c;
-  padding: 30px 35px;
+  padding: 30px 25px;
   border-radius: 12px;
-  max-width: 700px;
   font-size: 1.15rem;
   line-height: 1.8;
-  text-align: center;
-  transition: transform 0.3s, background 0.3s;
 }
-#about p:hover {
-  background: #3a3a3a;
-  transform: translateY(-3px);
+
+/* About Image */
+.about-pic img {
+  width: 100%;
+  border-radius: 12px;
+  object-fit: cover;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.5);
 }
+
+/* Slide-in animations */
+.about-text {
+  opacity: 0;
+  transform: translateX(-50px);
+  transition: all 0.8s ease;
+}
+
+.about-text.visible {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.about-pic {
+  opacity: 0;
+  transform: translateX(50px);
+  transition: all 0.8s ease;
+}
+
+.about-pic.visible {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+/* Responsive: stack vertically on small screens */
+@media (max-width: 768px) {
+  .about-container {
+    flex-direction: column;
+    gap: 25px;
+  }
+  .about-text, .about-pic {
+    width: 100%;
+  }
+}
+
+
+
+
+
 
 /* Skills & Projects Container */
 .skills-projects-container {
@@ -157,10 +221,19 @@ body::before {
   border-radius: 8px;
   width: 100%;
   max-width: 180px;
-  text-align: center;
+  text-align: left;          /* align text to left */
+  display: flex;             /* use flex for image + text */
+  align-items: center;       /* vertically center icon and text */
+  gap: 10px;                 /* space between icon and text */
   transition: background 0.3s, transform 0.2s;
-  cursor: default;
 }
+
+.skill img.skill-icon {
+  width: 50px;               /* icon size */
+  height: 50px;
+  object-fit: contain;
+}
+
 .skill:hover {
   background: #444444;
   transform: translateY(-2px);
