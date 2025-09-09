@@ -1,4 +1,3 @@
-/* General Reset */
 * {
   margin: 0;
   padding: 0;
@@ -11,7 +10,7 @@ body {
   scroll-behavior: smooth;
   color: #f0f0f0;
   
-  /* Polished background: linear + radial gradient */
+ 
   background:
     radial-gradient(circle at top left, #2a2a2a, #0a0a0a),
     linear-gradient(135deg, #0a0a0a, #1c1c1c, #2a2a2a);
@@ -99,11 +98,11 @@ body {
   width: 100%;
   max-width: 1005px;
   gap: 50px;
-  align-items: stretch; /* equal vertical height */
+  align-items: stretch; 
 }
 
 .about-text, .about-pic {
-  flex: 1; /* equal width */
+  flex: 1; 
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -192,7 +191,7 @@ body {
 .skill-category {
   flex: 1;
   min-width: 250px;
-  background: #2c2c2c; /* polished background */
+  background: #2c2c2c; 
   padding: 25px;
   border-radius: 12px;
   text-align: center;
@@ -208,7 +207,7 @@ body {
 
 .skill-category h3 {
   margin-bottom: 20px;
-  font-size: 1.5rem; /* slightly bigger heading */
+  font-size: 1.5rem; 
   color: #f0f0f0;
 }
 
@@ -223,7 +222,7 @@ body {
   display: flex;
   align-items: center;
   gap: 10px;
-  background: #1c1c1c; /* each skill has small dark box */
+  background: #1c1c1c; 
   padding: 8px 12px;
   border-radius: 8px;
   transition: transform 0.2s, background 0.2s;
@@ -243,9 +242,9 @@ body {
 
 /* Projects Section */
 .projects {
-  max-width: 900px;       /* keeps it centered */
-  margin: 60px auto;      /* spacing above and below */
-  background: #1c1c1c;    /* same dark box style as skills */
+  max-width: 900px;       
+  margin: 60px auto;      
+  background: #1c1c1c;    
   padding: 30px;
   border-radius: 12px;
   display: flex;
@@ -255,7 +254,7 @@ body {
 }
 
 .projects h2 {
-  text-align: center;     /* center heading */
+  text-align: center;     
   margin-bottom: 25px;
   font-size: 2rem;
   color: #f0f0f0;
@@ -354,16 +353,16 @@ body {
 
 /* Footer */
 footer {
-  background: #1c1c1c;           /* dark background */
-  color: #f0f0f0;                /* text color */
-  text-align: center;            /* center text */
-  padding: 20px 10px;            /* spacing */
-  font-size: 0.9rem;             /* slightly smaller text */
-  border-top: 1px solid #333;   /* subtle top border */
+  background: #1c1c1c;           
+  color: #f0f0f0;               
+  text-align: center;            
+  padding: 20px 10px;            
+  font-size: 0.9rem;             
+  border-top: 1px solid #333;   
 }
 
 footer p {
-  margin: 0;                     /* remove default margin */
+  margin: 0;                     
 }
 
 
