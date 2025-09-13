@@ -50,3 +50,20 @@ const observer = new IntersectionObserver(
 );
 reveals.forEach(el => observer.observe(el));
 
+// Skills Section Animation
+const skillCategories = document.querySelectorAll('.skill-category');
+
+const skillsObserver = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      skillCategories.forEach((cat, index) => {
+        setTimeout(() => {
+          cat.classList.add('show');
+        }, index * 200); // stagger effect
+      });
+      skillsObserver.unobserve(entry.target); 
+    }
+  });
+}, { threshold: 0.2 });
+
+skillsObserver.observe(document.querySelector('#skills'));
