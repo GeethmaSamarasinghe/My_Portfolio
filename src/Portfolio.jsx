@@ -68,9 +68,7 @@ const skillCategories = [
     items: [
       { name: "Html", icon: "/images/html.png" },
       { name: "CSS", icon: "/images/css.png" },
-      { name: "TailwindCSS", icon: "/images/tailwind.png" },
       { name: "JavaScript", icon: "/images/js.png" },
-      { name: "Reactjs", icon: "/images/reactjs.png" },
       { name: "Java", icon: "/images/java.png" },
       { name: "C", icon: "/images/c.png" },
     ],
@@ -78,6 +76,7 @@ const skillCategories = [
   {
     title: "Databases",
     items: [{ name: "MySQL", icon: "/images/mysql.png" }],
+    items: [{ name: "MongoDB", icon: "/images/mongo.png" }],
   },
   {
     title: "Design Tools",
