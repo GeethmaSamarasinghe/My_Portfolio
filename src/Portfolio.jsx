@@ -7,8 +7,7 @@ import React, { useState, useEffect, useRef } from "react";
  *   1. introGif      -> your typing-intro gif
  *   2. profilePic    -> your About Me photo
  *   3. skillIcons    -> your tech icon set (or keep using simple-icons CDN as-is)
- *   4. projectImage  -> your project screenshot
- *   5. contactImage  -> your "Contact Me" graphic
+ *   4. contactImage  -> your "Contact Me" graphic
  */
 
 // ---- Reusable scroll-reveal hook (replaces IntersectionObserver blocks in script.js) ----
@@ -89,12 +88,23 @@ const skillCategories = [
   },
 ];
 
+// Add more projects here as you build them — the grid below lays out
+// 1, 2, or many cards cleanly. `tools` reuses the same icon files as the
+// Skills section. `liveUrl` / `repoUrl` are optional; PLACEHOLDER "#" for
+// now — swap in your real links (a deployed link and/or a GitHub repo).
 const projects = [
   {
     title: "Pet Adoption Website",
     description:
       "A pet adoption website designed to connect animals with loving families. It features an elegant, user-friendly interface with sections for browsing adoptable pets, learning adoption tips, and exploring upcoming events, making the adoption process simple and enjoyable.",
-    image: "/images/Project 1.png", // put your screenshot here as public/images/project-1.png
+    tools: [
+      { name: "HTML", icon: "/images/html.png" },
+      { name: "CSS", icon: "/images/css.png" },
+      { name: "JavaScript", icon: "/images/js.png" },
+      { name: "Figma", icon: "/images/figma.png" },
+    ],
+    liveUrl: "#", // PLACEHOLDER — link to the deployed site
+    repoUrl: "#", // PLACEHOLDER — link to the GitHub repo, or remove this line to hide the icon
   },
 ];
 
@@ -133,10 +143,10 @@ function Hero() {
         <span className="animate-pulse">|</span>
       </h1>
       <p className="mt-3 mb-5 text-lg md:text-xl text-neutral-300">
-        Information Systems Undergraduate | Aspiring Developer 
+        Information Systems Undergraduate | Aspiring Business Analyst | Data Analyst
       </p>
       <img
-        src="/images/gif 2.gif" // put your intro gif at public/images/intro.gif
+        src="/images/gif 2.gif" 
         alt="Coding Girl"
         className={`w-[300px] mt-5 transition-all duration-500 ease-out ${
           showGif ? "opacity-100 translate-y-0" : "opacity-0 translate-y-5"
@@ -220,16 +230,84 @@ function SkillsSection() {
   );
 }
 
-function ProjectCard({ project }) {
+// Small inline icons so we don't pull in an icon library just for two glyphs.
+function ExternalLinkIcon(props) {
   return (
-    <div className="relative w-full max-w-2xl h-[390px] rounded-xl overflow-hidden shadow-lg cursor-pointer [perspective:1200px] group">
-      <div className="relative w-full h-full transition-transform duration-700 [transform-style:preserve-3d] group-hover:[transform:rotateY(180deg)]">
-        <div className="absolute inset-0 rounded-xl overflow-hidden [backface-visibility:hidden]">
-          <img src={project.image} alt={project.title} className="w-full h-full object-cover" />
-        </div>
-        <div className="absolute inset-0 rounded-xl overflow-hidden bg-neutral-800 p-6 flex flex-col justify-center gap-2 text-left [backface-visibility:hidden] [transform:rotateY(180deg)]">
-          <h3 className="text-xl mb-2 text-amber-300">{project.title}</h3>
-          <p className="text-base leading-snug">{project.description}</p>
+    <svg viewBox="0 0 20 20" fill="none" width="15" height="15" {...props}>
+      <path
+        d="M7.5 5h-2A1.5 1.5 0 0 0 4 6.5v8A1.5 1.5 0 0 0 5.5 16h8a1.5 1.5 0 0 0 1.5-1.5v-2M12 4h4v4M8.5 11.5 16 4"
+        stroke="currentColor"
+        strokeWidth="1.4"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+  );
+}
+
+function CodeIcon(props) {
+  return (
+    <svg viewBox="0 0 20 20" fill="none" width="16" height="16" {...props}>
+      <path
+        d="M7 6 3 10l4 4M13 6l4 4-4 4"
+        stroke="currentColor"
+        strokeWidth="1.4"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+  );
+}
+
+function ProjectCard({ project, delay }) {
+  return (
+    <div
+      style={{ transitionDelay: `${delay}ms` }}
+      className="group flex flex-col w-full max-w-sm bg-neutral-900 border border-neutral-800 rounded-2xl overflow-hidden shadow-lg hover:border-neutral-600 hover:-translate-y-1.5 transition-all duration-300"
+    >
+      <div className="flex flex-col flex-1 p-6">
+        <h3 className="text-xl font-medium mb-2">{project.title}</h3>
+        <p className="text-neutral-400 text-sm leading-relaxed mb-5">
+          {project.description}
+        </p>
+
+        {project.tools?.length > 0 && (
+          <div className="flex flex-wrap gap-2 mb-6">
+            {project.tools.map((tool) => (
+              <span
+                key={tool.name}
+                className="inline-flex items-center gap-1.5 bg-neutral-800 rounded-full pl-2 pr-3 py-1 text-xs text-neutral-300"
+              >
+                <img src={tool.icon} alt="" className="w-3.5 h-3.5" />
+                {tool.name}
+              </span>
+            ))}
+          </div>
+        )}
+
+        <div className="mt-auto flex items-center gap-5 pt-4 border-t border-neutral-800 text-sm">
+          {project.liveUrl && (
+            <a
+              href={project.liveUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-1.5 text-amber-300 hover:text-amber-200 transition-colors"
+            >
+              <ExternalLinkIcon />
+              View project
+            </a>
+          )}
+          {project.repoUrl && (
+            <a
+              href={project.repoUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-1.5 text-neutral-400 hover:text-neutral-200 transition-colors"
+            >
+              <CodeIcon />
+              Source
+            </a>
+          )}
         </div>
       </div>
     </div>
@@ -237,19 +315,33 @@ function ProjectCard({ project }) {
 }
 
 function Projects() {
-  const [ref, visible] = useReveal();
+  const [ref, visible] = useReveal(0.15);
   return (
-    <section
-      id="projects"
-      ref={ref}
-      className={`max-w-4xl mx-auto my-16 bg-neutral-900 rounded-xl p-8 flex flex-col items-center shadow-lg transition-all duration-700 ${
-        visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
-      }`}
-    >
-      <h2 className="text-center text-3xl mb-6">Projects</h2>
-      {projects.map((p) => (
-        <ProjectCard key={p.title} project={p} />
-      ))}
+    <section id="projects" ref={ref} className="max-w-6xl mx-auto px-5 py-16">
+      <div
+        className={`transition-all duration-700 ${
+          visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
+        }`}
+      >
+        <h2 className="text-center text-3xl mb-2">Projects</h2>
+        <p className="text-center text-neutral-400 mb-12">
+          A few things I've designed and built along the way.
+        </p>
+      </div>
+
+      <div className="flex flex-wrap justify-center gap-8">
+        {projects.map((project, i) => (
+          <div
+            key={project.title}
+            className={`transition-all duration-700 ${
+              visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
+            }`}
+            style={{ transitionDelay: visible ? `${i * 150}ms` : "0ms" }}
+          >
+            <ProjectCard project={project} />
+          </div>
+        ))}
+      </div>
     </section>
   );
 }
