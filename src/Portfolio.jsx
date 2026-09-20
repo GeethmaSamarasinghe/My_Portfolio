@@ -90,21 +90,56 @@ const skillCategories = [
 
 // Add more projects here as you build them — the grid below lays out
 // 1, 2, or many cards cleanly. `tools` reuses the same icon files as the
-// Skills section. `liveUrl` / `repoUrl` are optional; PLACEHOLDER "#" for
-// now — swap in your real links (a deployed link and/or a GitHub repo).
+// Skills section. `repoUrl` is PLACEHOLDER "#" for now — swap in the
+// GitHub link for each specific project's repo.
 const projects = [
   {
-    title: "Pet Adoption Website",
+    title: "Driving School Management System",
     description:
-      "A pet adoption website designed to connect animals with loving families. It features an elegant, user-friendly interface with sections for browsing adoptable pets, learning adoption tips, and exploring upcoming events, making the adoption process simple and enjoyable.",
+      "A system that streamlines student enrollment, lesson scheduling, instructor management, payments, and progress tracking through a centralized digital platform.",
+    tools: [
+      { name: "React.js", icon: "/images/reactjs.png" },
+      { name: "Node.js", icon: "/images/nodejs.png" }, // add this icon to public/images
+      { name: "Express.js", icon: "/images/express.png" }, // add this icon to public/images
+      { name: "MySQL", icon: "/images/mysql.png" },
+    ],
+    repoUrl: "https://github.com/GeethmaSamarasinghe/Driving-School-Management-System",
+  },
+  {
+    title: "360LK",
+    description:
+      "A virtual tourism platform that lets users explore Sri Lanka's natural landscapes, cultural landmarks, and historical sites through immersive 360° interactive experiences, bringing the country's most iconic destinations to life from anywhere in the world.",
     tools: [
       { name: "HTML", icon: "/images/html.png" },
       { name: "CSS", icon: "/images/css.png" },
       { name: "JavaScript", icon: "/images/js.png" },
       { name: "Figma", icon: "/images/figma.png" },
     ],
-    liveUrl: "#", // PLACEHOLDER — link to the deployed site
-    repoUrl: "#", // PLACEHOLDER — link to the GitHub repo, or remove this line to hide the icon
+    repoUrl: "https://github.com/GeethmaSamarasinghe/360LK",
+  },
+  {
+    title: "DermaScan",
+    description:
+      "A mobile application powered by AI and computer vision that lets users capture an image of an affected skin area, analyzes it with a trained model, and returns instant feedback with a confidence score and suggested next steps.",
+    tools: [
+      { name: "HTML", icon: "/images/html.png" },
+      { name: "CSS", icon: "/images/css.png" },
+      { name: "JavaScript", icon: "/images/js.png" },
+      { name: "Figma", icon: "/images/figma.png" },
+    ],
+    repoUrl: "https://github.com/GeethmaSamarasinghe/DermaScan",
+  },
+  {
+    title: "ECOFY",
+    description:
+      "A smart, web-based waste management system that digitalizes private waste collection services, ensuring timely pickups, transparent operations, and enhanced communication between customers, staff, and administrators.",
+    tools: [
+      { name: "React.js", icon: "/images/reactjs.png" },
+      { name: "Node.js", icon: "/images/nodejs.png" }, // add this icon to public/images
+      { name: "Express.js", icon: "/images/express.png" }, // add this icon to public/images
+      { name: "MongoDB", icon: "/images/mongodb.png" }, // add this icon to public/images
+    ],
+    repoUrl: "https://github.com/Ecofy-Waste-Management-Website/Ecofy-Fullstack",
   },
 ];
 
@@ -143,10 +178,10 @@ function Hero() {
         <span className="animate-pulse">|</span>
       </h1>
       <p className="mt-3 mb-5 text-lg md:text-xl text-neutral-300">
-        Information Systems Undergraduate | Aspiring Business Analyst | Data Analyst
+        Information Systems Undergraduate | Aspiring Business Analyst | Data Analyst 
       </p>
       <img
-        src="/images/gif 2.gif" 
+        src="/images/gif 2.gif" // put your intro gif at public/images/intro.gif
         alt="Coding Girl"
         className={`w-[300px] mt-5 transition-all duration-500 ease-out ${
           showGif ? "opacity-100 translate-y-0" : "opacity-0 translate-y-5"
@@ -170,12 +205,10 @@ function About() {
         >
           <h2 className="text-3xl mb-11 text-center">About Me</h2>
           <p className="bg-neutral-800 rounded-xl px-6 py-8 text-lg leading-relaxed">
-            I'm a passionate Information Systems student who loves creating
-            interactive and creative digital experiences. I enjoy both
-            designing and coding, and I take pride in turning ideas into
-            projects that work well and are fun to use. I'm curious and
-            always exploring new tools and ways to make digital experiences
-            even better.
+            A curious and creative problem-solver interested in how technology, business, and user needs come together to create
+            better products and solutions. I enjoy exploring problems from different perspectives and turning ideas into practical
+            digital experiences. With a blend of analytical thinking, creativity, business understanding, and technical knowledge, I am
+            particularly interested in business analysis, data analytics and product management.
           </p>
         </div>
         <div
@@ -230,21 +263,7 @@ function SkillsSection() {
   );
 }
 
-// Small inline icons so we don't pull in an icon library just for two glyphs.
-function ExternalLinkIcon(props) {
-  return (
-    <svg viewBox="0 0 20 20" fill="none" width="15" height="15" {...props}>
-      <path
-        d="M7.5 5h-2A1.5 1.5 0 0 0 4 6.5v8A1.5 1.5 0 0 0 5.5 16h8a1.5 1.5 0 0 0 1.5-1.5v-2M12 4h4v4M8.5 11.5 16 4"
-        stroke="currentColor"
-        strokeWidth="1.4"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-    </svg>
-  );
-}
-
+// Small inline icon so we don't pull in an icon library just for one glyph.
 function CodeIcon(props) {
   return (
     <svg viewBox="0 0 20 20" fill="none" width="16" height="16" {...props}>
@@ -263,7 +282,7 @@ function ProjectCard({ project, delay }) {
   return (
     <div
       style={{ transitionDelay: `${delay}ms` }}
-      className="group flex flex-col w-full max-w-sm bg-neutral-900 border border-neutral-800 rounded-2xl overflow-hidden shadow-lg hover:border-neutral-600 hover:-translate-y-1.5 transition-all duration-300"
+      className="group flex flex-col h-full w-full bg-neutral-900 border border-neutral-800 rounded-2xl overflow-hidden shadow-lg hover:border-neutral-600 hover:-translate-y-1.5 transition-all duration-300"
     >
       <div className="flex flex-col flex-1 p-6">
         <h3 className="text-xl font-medium mb-2">{project.title}</h3>
@@ -286,26 +305,15 @@ function ProjectCard({ project, delay }) {
         )}
 
         <div className="mt-auto flex items-center gap-5 pt-4 border-t border-neutral-800 text-sm">
-          {project.liveUrl && (
-            <a
-              href={project.liveUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-1.5 text-amber-300 hover:text-amber-200 transition-colors"
-            >
-              <ExternalLinkIcon />
-              View project
-            </a>
-          )}
           {project.repoUrl && (
             <a
               href={project.repoUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-1.5 text-neutral-400 hover:text-neutral-200 transition-colors"
+              className="inline-flex items-center gap-1.5 text-amber-300 hover:text-amber-200 transition-colors"
             >
               <CodeIcon />
-              Source
+              View project
             </a>
           )}
         </div>
@@ -329,11 +337,11 @@ function Projects() {
         </p>
       </div>
 
-      <div className="flex flex-wrap justify-center gap-8">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
         {projects.map((project, i) => (
           <div
             key={project.title}
-            className={`transition-all duration-700 ${
+            className={`h-full transition-all duration-700 ${
               visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
             }`}
             style={{ transitionDelay: visible ? `${i * 150}ms` : "0ms" }}
