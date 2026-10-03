@@ -127,17 +127,22 @@ const skillCategories = [
 ];
 
 // Achievements — add more entries here as you collect them.
+// `image` is optional: drop a photo/certificate into public/images/ and set the
+// path below. If the file is missing or the field is empty, the card simply
+// renders without an image.
 const achievements = [
   {
     title: "Volunteer of The Month",
     org: "IEEE Student Branch SUSL — Design Team",
     date: "December 2025",
+    image: "/images/achievement-ieee.jpg", // PLACEHOLDER - add this file to public/images
     description: "",
   },
   {
     title: "Finalist",
     org: "XCELLERATE, organized by SLASSCOM",
     date: "",
+    image: "/images/achievement-xcellerate.jpg", // PLACEHOLDER - add this file to public/images
     description:
       "Proposed an AI-powered webapp for efficient parking in urban areas.",
   },
@@ -145,6 +150,7 @@ const achievements = [
     title: "Qualified Proposal Submission Round",
     org: "Hackelite 2.0",
     date: "",
+    image: "/images/achievement-hackelite.jpg", // PLACEHOLDER - add this file to public/images
     description:
       "Proposed an AI-powered mobile app that can detect skin diseases through image analysis.",
   },
@@ -206,12 +212,15 @@ const projects = [
 ];
 
 // Data analytics projects — shown as their own sub-grid inside Projects.
+// `image` is optional: drop a dashboard screenshot into public/images/ and
+// set the path. If the file is missing, the card renders without an image.
 // No repos linked yet; add a `repoUrl` or `dashboardUrl` once you have one
 // and a matching link will render automatically (see ProjectCard below).
 const dataAnalyticsProjects = [
   {
     title: "Olist E-Commerce Insights Dashboard",
     tag: "Power BI",
+    image: "/images/dashboard-olist.png", // PLACEHOLDER - add this file to public/images
     description:
       "A Power BI dashboard built using the Olist Brazilian E-Commerce dataset, exploring sales, payments, sellers, customer reviews, and delivery performance using around 100K orders.",
     tools: [{ name: "Power BI", icon: "/images/powerbi.png" }],
@@ -219,6 +228,7 @@ const dataAnalyticsProjects = [
   {
     title: "Global Unicorn Startups Dashboard",
     tag: "MS Excel",
+    image: "/images/dashboard-unicorn.png", // PLACEHOLDER - add this file to public/images
     description:
       "An interactive Excel dashboard analyzing 1,000+ global unicorn companies, exploring where startup value is concentrated by industry, region, and time.",
     tools: [{ name: "MS Excel", icon: "/images/excel.png" }],
@@ -226,6 +236,7 @@ const dataAnalyticsProjects = [
   {
     title: "Pizza Place Sales Analysis Dashboard",
     tag: "Tableau",
+    image: "/images/dashboard-pizza.png", // PLACEHOLDER - add this file to public/images
     description:
       "Analyzed 48K+ pizza order records across 4 relational tables to identify revenue drivers, top-selling products, and peak ordering times using Tableau.",
     tools: [{ name: "Tableau", icon: "/images/tableau.png" }],
@@ -383,14 +394,18 @@ function Hero() {
 
         {/* Gif */}
         <div className="relative flex-1 flex justify-center">
-          <div className="absolute inset-0 m-auto w-64 h-64 rounded-full bg-amber-300/10 blur-3xl" aria-hidden="true" />
-          <img
-            src="/images/gif 2.gif" // put your intro gif at public/images/intro.gif
-            alt="Coding Girl"
-            className={`relative w-[260px] md:w-[340px] transition-all duration-500 ease-out ${
+          <div className="absolute inset-0 m-auto w-72 h-72 rounded-full bg-amber-300/10 blur-3xl" aria-hidden="true" />
+          <div
+            className={`relative rounded-full border border-amber-300/40 p-2 transition-all duration-500 ease-out ${
               showGif ? "opacity-100 translate-y-0" : "opacity-0 translate-y-5"
             }`}
-          />
+          >
+            <img
+              src="/images/profile-headshot.jpeg" // PLACEHOLDER - add your headshot to public/images
+              alt="Geethma Samarasinghe"
+              className="w-56 h-56 md:w-72 md:h-72 rounded-full object-cover border-4 border-neutral-800 shadow-lg"
+            />
+          </div>
         </div>
       </div>
     </section>
@@ -560,21 +575,34 @@ function AchievementsSection() {
           <div
             key={a.title + a.org}
             style={{ transitionDelay: visible ? `${i * 150}ms` : "0ms" }}
-            className={`flex flex-col bg-neutral-800 rounded-xl p-6 shadow-md hover:-translate-y-1 hover:bg-neutral-700 transition-all duration-500 ${
+            className={`flex flex-col bg-neutral-800 rounded-xl overflow-hidden shadow-md hover:-translate-y-1 hover:bg-neutral-700 transition-all duration-500 ${
               visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
             }`}
           >
-            <div className="flex items-center gap-3 mb-4 text-amber-300">
-              <TrophyIcon />
-              {a.date && <span className="text-xs text-neutral-400">{a.date}</span>}
-            </div>
-            <h3 className="text-lg font-medium mb-1.5">{a.title}</h3>
-            <p className="text-sm text-neutral-400 mb-3">{a.org}</p>
-            {a.description && (
-              <p className="text-sm text-neutral-300 leading-relaxed mt-auto">
-                {a.description}
-              </p>
+            {a.image && (
+              <img
+                src={a.image}
+                alt={a.title}
+                onError={(e) => {
+                  // Hide the image if the file isn't in public/images yet
+                  e.currentTarget.style.display = "none";
+                }}
+                className="w-full aspect-video object-cover border-b border-neutral-700"
+              />
             )}
+            <div className="flex flex-col flex-1 p-6">
+              <div className="flex items-center gap-3 mb-4 text-amber-300">
+                <TrophyIcon />
+                {a.date && <span className="text-xs text-neutral-400">{a.date}</span>}
+              </div>
+              <h3 className="text-lg font-medium mb-1.5">{a.title}</h3>
+              <p className="text-sm text-neutral-400 mb-3">{a.org}</p>
+              {a.description && (
+                <p className="text-sm text-neutral-300 leading-relaxed mt-auto">
+                  {a.description}
+                </p>
+              )}
+            </div>
           </div>
         ))}
       </div>
@@ -585,6 +613,17 @@ function AchievementsSection() {
 function ProjectCard({ project }) {
   return (
     <div className="group flex flex-col h-full w-full bg-neutral-900 border border-neutral-800 rounded-2xl overflow-hidden shadow-lg hover:border-neutral-600 hover:-translate-y-1.5 transition-all duration-300">
+      {project.image && (
+        <img
+          src={project.image}
+          alt={project.title}
+          onError={(e) => {
+            // Hide the image if the file isn't in public/images yet
+            e.currentTarget.style.display = "none";
+          }}
+          className="w-full aspect-video object-cover object-top border-b border-neutral-800"
+        />
+      )}
       <div className="flex flex-col flex-1 p-6">
         <div className="flex items-start justify-between gap-3 mb-2">
           <h3 className="text-xl font-medium">{project.title}</h3>
