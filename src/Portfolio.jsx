@@ -10,10 +10,8 @@ import React, { useState, useEffect, useRef } from "react";
  *   4. contactImage  -> your "Contact Me" graphic
  *
  * New in this version:
- *   - Skills: added "Tools & Technologies", "Frameworks & Libraries", and
- *     "Diagramming & Modelling" subcategories.
- *   - New Achievements section (between Skills and Projects).
- *   - Projects: added a "Data Analytics Projects" sub-grid.
+ *   - Nav bar, Hero, About Me and Skills restyled to match Achievements
+ *     and Projects (card style, amber accents, scroll-spy nav, mobile menu).
  */
 
 // ---- Reusable scroll-reveal hook (replaces IntersectionObserver blocks in script.js) ----
@@ -234,86 +232,164 @@ const dataAnalyticsProjects = [
   },
 ];
 
+// ---- Scroll-spy: tracks which section is currently in view for the nav ----
+function useActiveSection(ids) {
+  const [active, setActive] = useState(ids[0]);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) setActive(entry.target.id);
+        });
+      },
+      { rootMargin: "-40% 0px -55% 0px" }
+    );
+    ids.forEach((id) => {
+      const el = document.getElementById(id);
+      if (el) observer.observe(el);
+    });
+    return () => observer.disconnect();
+  }, [ids]);
+
+  return active;
+}
+
+const NAV_LINKS = ["home", "about", "skills", "achievements", "projects", "contact"];
+
 function NavBar() {
-  const links = ["home", "about", "skills", "achievements", "projects", "contact"];
+  const active = useActiveSection(NAV_LINKS);
+  const [open, setOpen] = useState(false);
+
   const scrollTo = (id) => {
     document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
+    setOpen(false);
   };
+
   return (
-    <nav className="fixed top-0 right-0 z-[1000] bg-black/85 hover:bg-neutral-800/90 transition-colors duration-300 rounded-bl-2xl px-8 py-4">
-      <ul className="flex gap-5 list-none">
-        {links.map((id) => (
-          <li key={id}>
-            <button
-              onClick={() => scrollTo(id)}
-              className="text-neutral-100 font-medium capitalize hover:text-neutral-400 hover:-translate-y-0.5 transition-all duration-200 bg-transparent"
-            >
-              {id}
-            </button>
-          </li>
-        ))}
-      </ul>
+    <nav className="fixed top-0 inset-x-0 z-[1000] bg-black/60 backdrop-blur-md border-b border-neutral-800">
+      <div className="max-w-6xl mx-auto flex items-center justify-between px-5 h-16">
+        <button
+          onClick={() => scrollTo("home")}
+          className="text-lg font-medium text-neutral-100 hover:text-amber-300 transition-colors bg-transparent"
+        >
+          Geethma
+        </button>
+
+        {/* Desktop links */}
+        <ul className="hidden md:flex items-center gap-1 list-none">
+          {NAV_LINKS.map((id) => (
+            <li key={id}>
+              <button
+                onClick={() => scrollTo(id)}
+                aria-current={active === id ? "page" : undefined}
+                className={`capitalize text-sm font-medium rounded-full px-4 py-2 transition-colors duration-200 ${
+                  active === id
+                    ? "bg-neutral-800 text-amber-300"
+                    : "bg-transparent text-neutral-400 hover:text-neutral-100"
+                }`}
+              >
+                {id}
+              </button>
+            </li>
+          ))}
+        </ul>
+
+        {/* Mobile menu toggle */}
+        <button
+          onClick={() => setOpen((o) => !o)}
+          aria-label="Toggle menu"
+          aria-expanded={open}
+          className="md:hidden text-neutral-100 bg-transparent p-2"
+        >
+          <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round">
+            {open ? <path d="M6 6l12 12M18 6 6 18" /> : <path d="M4 7h16M4 12h16M4 17h16" />}
+          </svg>
+        </button>
+      </div>
+
+      {/* Mobile dropdown */}
+      {open && (
+        <ul className="md:hidden flex flex-col gap-1 list-none px-5 pb-4 border-t border-neutral-800">
+          {NAV_LINKS.map((id) => (
+            <li key={id}>
+              <button
+                onClick={() => scrollTo(id)}
+                className={`w-full text-left capitalize text-sm font-medium rounded-lg px-3 py-2.5 transition-colors ${
+                  active === id
+                    ? "bg-neutral-800 text-amber-300"
+                    : "bg-transparent text-neutral-300 hover:text-neutral-100"
+                }`}
+              >
+                {id}
+              </button>
+            </li>
+          ))}
+        </ul>
+      )}
     </nav>
   );
 }
 
-function Hero() {
-  const [typed, showGif] = useTypedText("Hi, I'm Geethma Samarasinghe!", 100, 2);
-  return (
-    <section
-      id="home"
-      className="min-h-screen flex flex-col justify-center items-center text-center px-5 py-24"
-    >
-      <h1 className="text-3xl md:text-5xl font-light">
-        <span>{typed}</span>
-        <span className="animate-pulse">|</span>
-      </h1>
-      <p className="mt-3 mb-5 text-lg md:text-xl text-neutral-300">
-        Information Systems Undergraduate | Aspiring Business Analyst | Data Analyst
-      </p>
-      <img
-        src="/images/gif 2.gif" // put your intro gif at public/images/intro.gif
-        alt="Coding Girl"
-        className={`w-[300px] mt-5 transition-all duration-500 ease-out ${
-          showGif ? "opacity-100 translate-y-0" : "opacity-0 translate-y-5"
-        }`}
-      />
-    </section>
-  );
-}
+const GREETING = "Hi, I'm Geethma Samarasinghe!";
+const ROLES = ["Information Systems Undergraduate", "Aspiring Business Analyst", "Data Analyst"];
 
-function About() {
-  const [textRef, textVisible] = useReveal();
-  const [picRef, picVisible] = useReveal();
+function Hero() {
+  const [typed, showGif] = useTypedText(GREETING, 100, 2);
+  const scrollTo = (id) => {
+    document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
+  };
+
   return (
-    <section id="about" className="flex justify-center px-8 py-16 -mt-24">
-      <div className="flex flex-col md:flex-row w-full max-w-4xl gap-12 items-stretch">
-        <div
-          ref={textRef}
-          className={`flex-1 flex flex-col justify-center transition-all duration-700 ease-out ${
-            textVisible ? "opacity-100 translate-x-0" : "opacity-0 -translate-x-12"
-          }`}
-        >
-          <h2 className="text-3xl mb-11 text-center">About Me</h2>
-          <p className="bg-neutral-800 rounded-xl px-6 py-8 text-lg leading-relaxed">
-            A curious and creative problem-solver interested in how technology, business, and user needs come together to create
-            better products and solutions. I enjoy exploring problems from different perspectives and turning ideas into practical
-            digital experiences. With a blend of analytical thinking, creativity, business understanding, and technical knowledge, I am
-            particularly interested in business analysis, data analytics and product management.
-          </p>
+    <section id="home" className="min-h-screen flex items-center px-5 pt-28 pb-16">
+      <div className="max-w-6xl mx-auto w-full flex flex-col-reverse md:flex-row items-center gap-12 md:gap-16">
+        {/* Text */}
+        <div className="flex-1 text-center md:text-left">
+          {/* The invisible copy reserves the final height so the layout doesn't jump while typing */}
+          <h1 className="relative text-3xl md:text-5xl font-light leading-tight" aria-label={GREETING}>
+            <span className="invisible block" aria-hidden="true">{GREETING}</span>
+            <span className="absolute inset-0" aria-hidden="true">
+              {typed}
+              <span className="animate-pulse text-amber-300">|</span>
+            </span>
+          </h1>
+
+          <div className="mt-6 flex flex-wrap justify-center md:justify-start gap-2">
+            {ROLES.map((role) => (
+              <span
+                key={role}
+                className="bg-neutral-800/80 border border-neutral-700 rounded-full px-3.5 py-1.5 text-sm text-neutral-300"
+              >
+                {role}
+              </span>
+            ))}
+          </div>
+
+          <div className="mt-8 flex flex-wrap justify-center md:justify-start gap-4">
+            <button
+              onClick={() => scrollTo("projects")}
+              className="bg-amber-300 text-neutral-900 font-medium rounded-full px-6 py-2.5 hover:bg-amber-200 hover:-translate-y-0.5 transition-all duration-200"
+            >
+              View projects
+            </button>
+            <button
+              onClick={() => scrollTo("contact")}
+              className="bg-transparent border border-neutral-600 text-neutral-100 font-medium rounded-full px-6 py-2.5 hover:border-neutral-400 hover:-translate-y-0.5 transition-all duration-200"
+            >
+              Contact me
+            </button>
+          </div>
         </div>
-        <div
-          ref={picRef}
-          className={`flex-1 flex flex-col justify-center transition-all duration-700 ease-out ${
-            picVisible ? "opacity-100 translate-x-0" : "opacity-0 translate-x-12"
-          }`}
-        >
+
+        {/* Gif */}
+        <div className="relative flex-1 flex justify-center">
+          <div className="absolute inset-0 m-auto w-64 h-64 rounded-full bg-amber-300/10 blur-3xl" aria-hidden="true" />
           <img
-            src="/images/img 1.jpg" // put your photo at public/images/profile.jpg
-            width="180"
-            height="420"
-            alt="Geethma Samarasinghe"
-            className="w-full rounded-xl object-cover shadow-lg mx-auto"
+            src="/images/gif 2.gif" // put your intro gif at public/images/intro.gif
+            alt="Coding Girl"
+            className={`relative w-[260px] md:w-[340px] transition-all duration-500 ease-out ${
+              showGif ? "opacity-100 translate-y-0" : "opacity-0 translate-y-5"
+            }`}
           />
         </div>
       </div>
@@ -321,32 +397,116 @@ function About() {
   );
 }
 
-function SkillsSection() {
-  const [sectionRef, visible] = useReveal(0.2);
+const FOCUS_AREAS = ["Business Analysis", "Data Analytics", "Product Management"];
+
+function About() {
+  const [picRef, picVisible] = useReveal();
+  const [textRef, textVisible] = useReveal();
+
   return (
-    <section id="skills" ref={sectionRef} className="max-w-6xl mx-auto px-5 py-12">
-      <h2 className="text-center text-3xl mb-10">Skills</h2>
-      <div className="flex flex-wrap justify-between gap-8">
+    <section id="about" className="max-w-5xl mx-auto px-5 py-16">
+      <div className="mb-12">
+        <h2 className="text-center text-3xl mb-2">About Me</h2>
+        <p className="text-center text-neutral-400">A little about who I am and what I care about.</p>
+      </div>
+
+      <div className="grid grid-cols-1 md:grid-cols-5 gap-12 items-center">
+        {/* Photo */}
+        <div
+          ref={picRef}
+          className={`md:col-span-2 transition-all duration-700 ease-out ${
+            picVisible ? "opacity-100 translate-x-0" : "opacity-0 -translate-x-12"
+          }`}
+        >
+          <div className="relative max-w-xs mx-auto">
+            <div
+              className="absolute inset-0 translate-x-3 translate-y-3 rounded-2xl border border-amber-300/30"
+              aria-hidden="true"
+            />
+            <img
+              src="/images/img 1.jpg" // put your photo at public/images/profile.jpg
+              alt="Geethma Samarasinghe"
+              className="relative w-full aspect-[4/5] object-cover rounded-2xl border border-neutral-800 shadow-lg"
+            />
+          </div>
+        </div>
+
+        {/* Text */}
+        <div
+          ref={textRef}
+          className={`md:col-span-3 transition-all duration-700 ease-out ${
+            textVisible ? "opacity-100 translate-x-0" : "opacity-0 translate-x-12"
+          }`}
+        >
+          <div className="bg-neutral-900 border border-neutral-800 rounded-2xl p-8 shadow-lg hover:border-neutral-600 transition-colors duration-300">
+            <p className="text-neutral-300 leading-relaxed">
+              A curious and creative problem-solver interested in how technology, business, and user needs come together to create
+              better products and solutions. I enjoy exploring problems from different perspectives and turning ideas into practical
+              digital experiences. With a blend of analytical thinking, creativity, business understanding, and technical knowledge, I am
+              particularly interested in business analysis, data analytics and product management.
+            </p>
+            <div className="flex flex-wrap gap-2 mt-6 pt-6 border-t border-neutral-800">
+              {FOCUS_AREAS.map((area) => (
+                <span
+                  key={area}
+                  className="text-xs tracking-wide text-amber-300 bg-amber-300/10 rounded-full px-3 py-1.5"
+                >
+                  {area}
+                </span>
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function SkillsSection() {
+  const [sectionRef, visible] = useReveal(0.1);
+
+  return (
+    <section id="skills" ref={sectionRef} className="max-w-6xl mx-auto px-5 py-16">
+      <div
+        className={`transition-all duration-700 ${
+          visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
+        }`}
+      >
+        <h2 className="text-center text-3xl mb-2">Skills</h2>
+        <p className="text-center text-neutral-400 mb-12">
+          The languages, tools, and frameworks I work with.
+        </p>
+      </div>
+
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
         {skillCategories.map((cat, i) => (
           <div
             key={cat.title}
-            style={{ transitionDelay: visible ? `${i * 150}ms` : "0ms" }}
-            className={`flex-1 min-w-[250px] bg-neutral-800 rounded-xl p-6 text-center shadow-md hover:-translate-y-1 hover:bg-neutral-700 transition-all duration-500 ${
-              visible ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-12"
+            style={{ transitionDelay: visible ? `${i * 120}ms` : "0ms" }}
+            className={`h-full transition-all duration-700 ${
+              visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
             }`}
           >
-            <h3 className="text-xl mb-5">{cat.title}</h3>
-            <ul className="list-none space-y-2.5">
-              {cat.items.map((item) => (
-                <li
-                  key={item.name}
-                  className="flex items-center gap-2.5 bg-neutral-900 rounded-lg px-3 py-2 hover:bg-neutral-600 hover:-translate-y-0.5 transition-all duration-200"
-                >
-                  <img src={item.icon} alt={item.name} className="w-6 h-6" />
-                  <span>{item.name}</span>
-                </li>
-              ))}
-            </ul>
+            <div className="flex flex-col h-full w-full bg-neutral-900 border border-neutral-800 rounded-2xl p-6 shadow-lg hover:border-neutral-600 hover:-translate-y-1.5 transition-all duration-300">
+              <div className="flex items-start justify-between gap-3 mb-5">
+                <h3 className="text-xl font-medium">{cat.title}</h3>
+                <span className="shrink-0 text-[11px] tracking-wide text-amber-300 bg-amber-300/10 rounded-full px-2.5 py-1">
+                  {cat.items.length}
+                </span>
+              </div>
+
+              <div className="flex flex-wrap gap-2.5 pt-5 border-t border-neutral-800">
+                {cat.items.map((item) => (
+                  <span
+                    key={item.name}
+                    className="inline-flex items-center gap-2 bg-neutral-800 rounded-full pl-2.5 pr-3.5 py-1.5 text-sm text-neutral-200 hover:bg-neutral-700 transition-colors duration-200"
+                  >
+                    <img src={item.icon} alt="" className="w-4 h-4 object-contain" />
+                    {item.name}
+                  </span>
+                ))}
+              </div>
+            </div>
           </div>
         ))}
       </div>
