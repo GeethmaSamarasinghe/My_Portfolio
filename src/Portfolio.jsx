@@ -756,7 +756,7 @@ const contactLinks = [
   {
     label: "LinkedIn",
     value: "Geethma Samarasinghe",
-    href: "https://www.linkedin.com/in/YOUR-LINKEDIN-USERNAME", // PLACEHOLDER - paste your LinkedIn profile URL
+    href: "www.linkedin.com/in/geethma-samarasinghe-5b3036391", // PLACEHOLDER - paste your LinkedIn profile URL
     icon: LinkedInIcon,
     external: true,
   },
