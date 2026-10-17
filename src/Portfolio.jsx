@@ -97,13 +97,13 @@ const skillCategories = [
     items: [
       { name: "MS Excel", icon: "/images/excel.png" }, // add icon to public/images
       { name: "Power BI", icon: "/images/powerbi.png" }, // add icon to public/images
-      { name: "Tableau", icon: "/images/tableau.png" }, // add icon to public/images
+      { name: "Tableau", icon: "/images/tableau.jpg" }, // add icon to public/images
       { name: "Figma", icon: "/images/figma.png" },
       { name: "Google Colab", icon: "/images/colab.png" }, // add icon to public/images
       { name: "Jira", icon: "/images/jira.png" }, // add icon to public/images
-      { name: "Trello", icon: "/images/trello.png" }, // add icon to public/images
+      { name: "Trello", icon: "/images/trello.jpg" }, // add icon to public/images
       { name: "GitHub", icon: "/images/github.png" }, // add icon to public/images
-      { name: "VS Code", icon: "/images/vscode.png" }, // add icon to public/images
+      { name: "VS Code", icon: "/images/vscode.jpeg" }, // add icon to public/images
       { name: "Blender", icon: "/images/blender.png" }, // add icon to public/images
     ],
   },
@@ -111,7 +111,7 @@ const skillCategories = [
     title: "Frameworks & Libraries",
     items: [
       { name: "React.js", icon: "/images/reactjs.png" },
-      { name: "Node.js", icon: "/images/nodejs.png" },
+      { name: "Node.js", icon: "/images/node.png" },
       { name: "Express.js", icon: "/images/express.png" },
       { name: "Tailwind CSS", icon: "/images/tailwind.png" }, // add icon to public/images
       { name: "Pandas", icon: "/images/pandas.png" }, // add icon to public/images
@@ -120,7 +120,7 @@ const skillCategories = [
   {
     title: "Diagramming & Modelling",
     items: [
-      { name: "Lucidchart", icon: "/images/lucidchart.png" }, // add icon to public/images
+      { name: "Lucidchart", icon: "/images/lucid.png" }, // add icon to public/images
       { name: "Draw.io", icon: "/images/drawio.png" }, // add icon to public/images
     ],
   },
