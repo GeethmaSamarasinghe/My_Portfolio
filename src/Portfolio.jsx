@@ -99,8 +99,8 @@ const skillCategories = [
       { name: "Power BI", icon: "/images/powerbi.png" }, // add icon to public/images
       { name: "Tableau", icon: "/images/tableau.jpg" }, // add icon to public/images
       { name: "Figma", icon: "/images/figma.png" },
-      { name: "Google Colab", icon: "/images/colab.png" }, // add icon to public/images
-      { name: "Jira", icon: "/images/jira.png" }, // add icon to public/images
+      { name: "Google Colab", icon: "/images/gcolab.jpg" }, // add icon to public/images
+      { name: "Jira", icon: "/images/Jira.png" }, // add icon to public/images
       { name: "Trello", icon: "/images/trello.jpg" }, // add icon to public/images
       { name: "GitHub", icon: "/images/github.png" }, // add icon to public/images
       { name: "VS Code", icon: "/images/vscode.jpeg" }, // add icon to public/images
@@ -121,7 +121,7 @@ const skillCategories = [
     title: "Diagramming & Modelling",
     items: [
       { name: "Lucidchart", icon: "/images/lucid.png" }, // add icon to public/images
-      { name: "Draw.io", icon: "/images/drawio.png" }, // add icon to public/images
+      { name: "Draw.io", icon: "/images/draw.io.png" }, // add icon to public/images
     ],
   },
 ];
@@ -167,7 +167,7 @@ const projects = [
       "A system that streamlines student enrollment, lesson scheduling, instructor management, payments, and progress tracking through a centralized digital platform.",
     tools: [
       { name: "React.js", icon: "/images/reactjs.png" },
-      { name: "Node.js", icon: "/images/nodejs.png" },
+      { name: "Node.js", icon: "/images/node.png" },
       { name: "Express.js", icon: "/images/express.png" },
       { name: "MySQL", icon: "/images/mysql.png" },
     ],
@@ -203,7 +203,7 @@ const projects = [
       "A smart, web-based waste management system that digitalizes private waste collection services, ensuring timely pickups, transparent operations, and enhanced communication between customers, staff, and administrators.",
     tools: [
       { name: "React.js", icon: "/images/reactjs.png" },
-      { name: "Node.js", icon: "/images/nodejs.png" },
+      { name: "Node.js", icon: "/images/node.png" },
       { name: "Express.js", icon: "/images/express.png" },
       { name: "MongoDB", icon: "/images/mongodb.png" },
     ],
