@@ -726,16 +726,99 @@ function Projects() {
   );
 }
 
-function Contact() {
+// ---- Contact icons (inline SVG, no icon library needed) ----
+function LinkedInIcon(props) {
   return (
-    <section id="contact" className="min-h-screen flex flex-col justify-center items-center px-5 py-24">
-      <img
-        src="/images/Contact Me.png" // put your contact graphic at public/images/contact-me.png
-        width="900"
-        height="500"
-        alt="Contact Me"
-        className="max-w-full h-auto rounded-xl"
-      />
+    <svg viewBox="0 0 24 24" width="28" height="28" fill="currentColor" {...props}>
+      <path d="M4.98 3.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5ZM3 9.75h4v11.5H3V9.75Zm6.5 0h3.83v1.57h.06c.53-1 1.84-2.07 3.78-2.07 4.04 0 4.78 2.66 4.78 6.12v5.88h-4v-5.2c0-1.24-.02-2.84-1.73-2.84-1.73 0-2 1.35-2 2.75v5.29h-4V9.75Z" />
+    </svg>
+  );
+}
+
+function GitHubIcon(props) {
+  return (
+    <svg viewBox="0 0 24 24" width="28" height="28" fill="currentColor" {...props}>
+      <path d="M12 .5a11.5 11.5 0 0 0-3.64 22.41c.58.1.79-.25.79-.56v-2c-3.2.7-3.88-1.37-3.88-1.37-.52-1.33-1.28-1.69-1.28-1.69-1.05-.71.08-.7.08-.7 1.16.08 1.77 1.19 1.77 1.19 1.03 1.77 2.7 1.26 3.36.96.1-.75.4-1.26.73-1.55-2.55-.29-5.24-1.28-5.24-5.69 0-1.26.45-2.28 1.19-3.09-.12-.29-.52-1.46.11-3.05 0 0 .97-.31 3.17 1.18a11 11 0 0 1 5.78 0c2.2-1.49 3.17-1.18 3.17-1.18.63 1.59.23 2.76.11 3.05.74.81 1.19 1.83 1.19 3.09 0 4.42-2.7 5.4-5.27 5.68.41.36.78 1.06.78 2.14v3.17c0 .31.21.67.8.56A11.5 11.5 0 0 0 12 .5Z" />
+    </svg>
+  );
+}
+
+function MailIcon(props) {
+  return (
+    <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" {...props}>
+      <rect x="3" y="5" width="18" height="14" rx="2" />
+      <path d="m3 7 9 6 9-6" />
+    </svg>
+  );
+}
+
+const contactLinks = [
+  {
+    label: "LinkedIn",
+    value: "Geethma Samarasinghe",
+    href: "https://www.linkedin.com/in/YOUR-LINKEDIN-USERNAME", // PLACEHOLDER - paste your LinkedIn profile URL
+    icon: LinkedInIcon,
+    external: true,
+  },
+  {
+    label: "GitHub",
+    value: "Geethma Samarasinghe",
+    href: "https://github.com/GeethmaSamarasinghe",
+    icon: GitHubIcon,
+    external: true,
+  },
+  {
+    label: "Email",
+    value: "geethsamarasinghe256@gmail.com",
+    href: "mailto:geethsamarasinghe256@gmail.com",
+    icon: MailIcon,
+    external: false,
+  },
+];
+
+function Contact() {
+  const [ref, visible] = useReveal(0.15);
+
+  return (
+    <section
+      id="contact"
+      ref={ref}
+      className="min-h-screen flex flex-col justify-center max-w-5xl mx-auto px-5 py-24"
+    >
+      <div
+        className={`transition-all duration-700 ${
+          visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
+        }`}
+      >
+        <h2 className="text-center text-4xl md:text-5xl font-light mb-3">Contact Me</h2>
+        <p className="text-center text-neutral-400 mb-14">
+          Let's connect — click any card to get in touch.
+        </p>
+      </div>
+
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
+        {contactLinks.map(({ label, value, href, icon: Icon, external }, i) => (
+          <a
+            key={label}
+            href={href}
+            {...(external ? { target: "_blank", rel: "noopener noreferrer" } : {})}
+            style={{ transitionDelay: visible ? `${i * 150}ms` : "0ms" }}
+            className={`group flex items-center gap-5 bg-neutral-900 border border-neutral-800 rounded-2xl p-6 shadow-lg hover:border-amber-300/50 hover:-translate-y-1.5 transition-all duration-500 ${
+              label === "Email" ? "sm:col-span-2 sm:max-w-md sm:w-full sm:mx-auto" : ""
+            } ${visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"}`}
+          >
+            <span className="shrink-0 flex items-center justify-center w-14 h-14 rounded-full bg-amber-300/10 text-amber-300 group-hover:bg-amber-300 group-hover:text-neutral-900 transition-colors duration-300">
+              <Icon />
+            </span>
+            <span className="min-w-0">
+              <span className="block text-lg font-medium text-neutral-100">{label}</span>
+              <span className="block text-sm text-neutral-400 truncate group-hover:text-neutral-200 transition-colors">
+                {value}
+              </span>
+            </span>
+          </a>
+        ))}
+      </div>
     </section>
   );
 }
